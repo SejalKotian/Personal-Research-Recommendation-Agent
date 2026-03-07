@@ -1,0 +1,41 @@
+# Environment / secrets — NEVER commit these
+.env
+.env.local
+*.env
+
+# MSAL token cache — contains your Microsoft auth tokens
+.msal_token_cache.json
+
+# SQLite database (user-specific data)
+*.db
+*.sqlite3
+
+# Virtual environments
+venv/
+.venv/
+agaivenv1/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

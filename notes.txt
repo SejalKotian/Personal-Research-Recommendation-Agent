@@ -1,0 +1,5 @@
+This week I've been working on GNN models for materials property prediction.
+Also studying multigrid methods for my scientific computing course.
+Medical waste startup: testing object detection models for waste segregation.
+Looking into diffusion models and how they compare to GAN approaches.
+Not interested in: pure NLP, web dev, anything unrelated to ML/science.
