@@ -17,25 +17,23 @@ $Action = New-ScheduledTaskAction `
     -Argument "`"$Script`" --notes-file `"$NotesFile`" --output `"$OutputFile`" --email" `
     -WorkingDirectory $ProjectDir
 
-# Every Sunday at 19:00
-$Trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At "19:00"
+# Every Saturday at 19:30
+$Trigger = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Saturday -At "19:30"
 
 $Settings = New-ScheduledTaskSettingsSet `
     -ExecutionTimeLimit (New-TimeSpan -Hours 1) `
-    -StartWhenAvailable `       # run ASAP if the PC was off at 7pm
-    -WakeToRun:$false
+    -StartWhenAvailable
 
 Register-ScheduledTask `
     -TaskName   $TaskName `
     -Action     $Action `
     -Trigger    $Trigger `
     -Settings   $Settings `
-    -RunLevel   Highest `
     -Force
 
 Write-Host ""
 Write-Host "Task '$TaskName' registered successfully." -ForegroundColor Green
-Write-Host "It will run every Sunday at 7:00 PM." -ForegroundColor Green
+Write-Host "It will run every Saturday at 7:30 PM." -ForegroundColor Green
 Write-Host ""
 Write-Host "To run it immediately for a test:"
 Write-Host "  Start-ScheduledTask -TaskName '$TaskName'"

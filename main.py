@@ -168,7 +168,7 @@ def run_pipeline(
 
     if send_email:
         date_str = datetime.now().strftime("%B %d, %Y")
-        subject = f"Your Weekly Research Digest — {date_str}"
+        subject = f"Your Weekly Digest - {date_str} by Radar"
         md_content = format_markdown(profile, ranked)
         try:
             send_digest_email(subject=subject, markdown_body=md_content)
