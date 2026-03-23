@@ -51,8 +51,9 @@ def format_terminal(profile: ResearchProfile, ranked: list[RankedPaper]) -> str:
         label = _LABEL_EMOJI.get(rp.relevance_label, rp.relevance_label.upper())
         depth = _DEPTH_EMOJI.get(rp.read_depth, rp.read_depth)
 
+        mode = "[QUALITY PICK]" if rp.selection_mode == "quality" else "[RELEVANCE PICK]"
         lines.append(f"\n{i}. {p.title}")
-        lines.append(f"   {label}  |  {depth}  |  {p.date}  |  {p.source.replace('_', ' ').title()}")
+        lines.append(f"   {mode}  |  {label}  |  {depth}  |  {p.date}  |  {p.source.replace('_', ' ').title()}")
         if p.authors:
             lines.append(f"   Authors: {', '.join(p.authors[:3])}")
         lines.append(f"   URL: {p.url}")
@@ -96,8 +97,9 @@ def format_markdown(profile: ResearchProfile, ranked: list[RankedPaper]) -> str:
         label = rp.relevance_label.capitalize()
         depth = rp.read_depth.capitalize()
 
+        mode_badge = "**[Quality Pick]**" if rp.selection_mode == "quality" else "**[Relevance Pick]**"
         lines.append(f"\n### {i}. [{p.title}]({p.url})")
-        lines.append(f"**{label}** | {depth} | {p.date} | {p.source.replace('_', ' ').title()}")
+        lines.append(f"{mode_badge} **{label}** | {depth} | {p.date} | {p.source.replace('_', ' ').title()}")
         if p.authors:
             lines.append(f"*{', '.join(p.authors[:3])}*")
         lines.append(f"\n{rp.explanation}")
@@ -123,6 +125,7 @@ def format_dict(profile: ResearchProfile, ranked: list[RankedPaper]) -> dict:
                 "source": rp.paper.source,
                 "authors": rp.paper.authors,
                 "relevance_label": rp.relevance_label,
+                "selection_mode": rp.selection_mode,
                 "explanation": rp.explanation,
                 "read_depth": rp.read_depth,
                 "score": round(rp.score, 4),

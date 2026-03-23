@@ -36,6 +36,7 @@ class RankedPaper(BaseModel):
     relevance_label: str          # "research" | "coursework" | "project"
     explanation: str              # LLM-generated 2-3 sentence explanation
     read_depth: str               # "skim (10 min)" | "deep read" | "save for later"
+    selection_mode: str           # "quality" | "relevance"
 
 
 # ─── Stage 1: TF-IDF Scoring ──────────────────────────────────────────────────
@@ -115,14 +116,28 @@ relevant recent papers for their specific work.
 
 Given:
 1. A JSON research profile describing their active topics, tasks, and keywords
-2. A numbered list of candidate papers (title + abstract)
+2. A numbered list of candidate papers with quality signals (citations, venue, authors)
 
-Your job is to:
-- Select the top {n} papers most useful to this person RIGHT NOW
-- For each selected paper, write a 2-3 sentence explanation of why it matters
-  to them specifically (reference their actual topics/tasks)
-- Assign a relevance_label: one of "research", "coursework", or "project"
-- Assign a read_depth: one of "skim (10 min)", "deep read", or "save for later"
+You must select exactly {n} papers using this MANDATORY split:
+
+PAPER 1 — "Quality Pick":
+  Select the single most rigorous, well-validated paper based on:
+  - High citation count (prefer cited papers over zero-citation preprints)
+  - Published in a reputable venue/journal over arXiv-only preprints
+  - Strong author affiliations (top universities, known labs) if inferable from names
+  - Still relevant to the user's topics (do not sacrifice relevance entirely)
+  This paper should be one the user can cite with confidence.
+
+PAPERS 2 & {n} — "Relevance Picks":
+  Select purely for relevance to the user's current work this week.
+  Ignore quality signals entirely — a preprint posted yesterday with zero
+  citations is fine if it directly addresses their active research.
+
+For EACH paper write:
+- A 2-3 sentence explanation referencing their actual topics/tasks
+- relevance_label: one of "research", "coursework", or "project"
+- read_depth: one of "skim (10 min)", "deep read", or "save for later"
+- selection_mode: "quality" for paper 1, "relevance" for papers 2+
 
 Output ONLY valid JSON (no markdown fences):
 [
@@ -130,7 +145,15 @@ Output ONLY valid JSON (no markdown fences):
     "index": <1-based index from the candidate list>,
     "relevance_label": "...",
     "explanation": "...",
-    "read_depth": "..."
+    "read_depth": "...",
+    "selection_mode": "quality"
+  }},
+  {{
+    "index": <1-based index>,
+    "relevance_label": "...",
+    "explanation": "...",
+    "read_depth": "...",
+    "selection_mode": "relevance"
   }},
   ...
 ]
@@ -151,12 +174,17 @@ def llm_rerank(
 
     profile_json = profile.model_dump_json(indent=2)
 
-    # Build numbered candidate list
+    # Build numbered candidate list with quality signals
     candidate_lines = []
     for i, (paper, score) in enumerate(candidates, start=1):
+        venue = paper.venue or ("arXiv preprint" if paper.source == "arxiv" else "unknown venue")
+        citations = f"{paper.citation_count} citations" if paper.citation_count is not None else "citations unknown"
+        authors = ", ".join(paper.authors[:3]) if paper.authors else "unknown"
+        pub_status = "preprint" if (not paper.venue or paper.source == "arxiv") else "published"
         candidate_lines.append(
             f"{i}. Title: {paper.title}\n"
-            f"   Date: {paper.date} | Source: {paper.source}\n"
+            f"   Date: {paper.date} | Status: {pub_status} | Venue: {venue}\n"
+            f"   Citations: {citations} | Authors: {authors}\n"
             f"   Abstract: {paper.abstract[:500]}..."
         )
     candidates_text = "\n\n".join(candidate_lines)
@@ -199,6 +227,7 @@ def llm_rerank(
                 relevance_label=sel.get("relevance_label", "research"),
                 explanation=sel.get("explanation", ""),
                 read_depth=sel.get("read_depth", "skim (10 min)"),
+                selection_mode=sel.get("selection_mode", "relevance"),
             )
         )
 

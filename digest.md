@@ -1,33 +1,33 @@
-# Weekly Research Digest — Saturday, March 07 2026
+# Weekly Research Digest — Sunday, March 22 2026
 
-> The researcher is working on GNN-based materials property prediction and exploring generative modeling approaches, specifically comparing diffusion models to GANs. They are also building object detection systems for a medical waste segregation startup and studying multigrid methods as part of a scientific computing course.
+> The researcher is working on GNN-based materials property prediction and exploring generative modeling approaches, specifically comparing diffusion models and GANs. Concurrently, they are supporting a medical waste startup by testing object detection models for automated waste segregation. They are also taking a scientific computing course with a focus on multigrid methods.
 
 ## Your Active Topics
 - graph neural networks for materials property prediction
 - multigrid methods in scientific computing
 - object detection for medical waste segregation
-- diffusion models vs GAN generative approaches
+- diffusion models vs GAN approaches for generative modeling
 
 ---
 ## Top Paper Picks
 
-### 1. [Accelerating Text-to-Video Generation with Calibrated Sparse Attention](https://arxiv.org/abs/2603.05503v1)
-**Research** | Skim (10 min) | 2026-03-05 | Arxiv
-*Shai Yehezkel, Shahar Yadin, Noam Elata*
+### 1. [Dynamic embedding representation for graph neural networks to enhance materials property prediction with limited datasets](https://www.semanticscholar.org/paper/dc046cee863906a46a72029a7e5d86c8c357282c)
+**Research** | Deep read | 2026-03-12 | Semantic Scholar
+*Vishu Gupta, Kamal Choudhary, Youjia Li*
 
-This paper directly addresses diffusion model efficiency, a core research topic for this student who is comparing diffusion models to GANs. Understanding sparse attention mechanisms in transformer-based diffusion backbones is highly relevant when evaluating the practical tradeoffs between diffusion models and GAN-based approaches, particularly for generation quality versus runtime.
+This paper directly addresses GNN-based materials property prediction, specifically focusing on graph embeddings that capture structural and compositional information — a core challenge in the researcher's current work on developing and evaluating GNN models for materials properties. The dynamic embedding approach for limited datasets is particularly relevant as data scarcity is a common bottleneck in materials informatics.
 
-### 2. [The Inverse Micromechanics Problem given Dielectric Constants for Isotropic Composites with Spherical Inclusions](https://arxiv.org/abs/2603.05460v1)
-**Research** | Save for later | 2026-03-05 | Arxiv
-*Athindra Pavan, Swaroop Darbha, Bjorn Birgisson*
+### 2. [Achieving Robust Extrapolation in Materials Property Prediction via Decoupled Transfer Learning](https://www.semanticscholar.org/paper/971ce5d620169df1716406b1b07a7a7e89eac960)
+**Research** | Deep read | 2026-02-20 | Semantic Scholar
+*T. Sugiura, Teruyasu Mizoguchi*
 
-This paper on inverse micromechanics for composite materials using dielectric constants is directly relevant to the student's GNN-based materials property prediction work. Predicting dielectric and conductivity properties of composites overlaps with materials informatics, and the convex optimization framework could complement or benchmark against GNN-based prediction approaches.
+This paper tackles extrapolation failure in GNN-based materials property prediction, a fundamental limitation directly relevant to the researcher's task of developing robust GNN models. The decoupled transfer learning approach offers a concrete methodological improvement they could incorporate or benchmark against in their own work.
 
-### 3. [Towards 3D Scene Understanding of Gas Plumes in LWIR Hyperspectral Images Using Neural Radiance Fields](https://arxiv.org/abs/2603.05473v1)
-**Project** | Skim (10 min) | 2026-03-05 | Arxiv
-*Scout Jarman, Zigfried Hampel-Arias, Adra Carr*
+### 3. [Thermodynamic Descriptors from Molecular Dynamics as Machine Learning Features for Extrapolable Property Prediction](https://www.semanticscholar.org/paper/22d40fc9b7f7623e6794133ebbeb1dde4013ad82)
+**Research** | Save for later | 2026-03-12 | Semantic Scholar
+*Nuria H. Espejo, Pablo Llombart, Andr'es Gonz'alez de Castilla*
 
-Although focused on gas plumes rather than medical waste, this paper tackles material detection and classification using computer vision on hyperspectral images, which shares methodological overlap with the student's object detection work for medical waste segregation. The multi-image fusion and scene understanding strategies could inform robustness improvements in their detection pipeline.
+This paper proposes a physics-augmented ML framework to overcome the extrapolation limitations of structure-based GNNs for property prediction, complementing the researcher's exploration of GNN models for materials informatics. The integration of thermodynamic descriptors from molecular dynamics as ML features provides an alternative perspective on improving prediction beyond training distributions.
 
 ---
 *Generated by your Research Recommendation Agent*
